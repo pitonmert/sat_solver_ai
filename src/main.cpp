@@ -7,14 +7,14 @@ int main() {
     try {
         std::cout << "Dosya okunuyor: " << dosya << std::endl;
         CNFFormula f = parseCNF(dosya);
-        
+
         std::cout << "---- CNF Okundu ----" << std::endl;
 
         std::set<int> solution;
         std::set<int> initial_assigned;
 
         bool result = DPLL(f, initial_assigned, solution);
-        
+
         if (result) {
             std::cout << "Çözüm bulundu! Atamalar: ";
             for (int lit : solution) std::cout << lit << " ";

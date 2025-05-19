@@ -33,7 +33,7 @@ CNFFormula parseCNF(const std::string& filename) {
             iss >> dummy1 >> dummy2 >> formula.numVars >> formula.numClauses;
             continue;
         }
-        
+
         std::istringstream iss(line);
         int literal;
         Clause clause;
@@ -51,7 +51,7 @@ CNFFormula parseCNF(const std::string& filename) {
             if (!valid) {
                 throw std::runtime_error("Geçersiz karakter klauz satırında: " + token);
             }
-            
+
             literal = std::stoi(token);
 
             if (literal == 0) {
@@ -72,7 +72,7 @@ CNFFormula parseCNF(const std::string& filename) {
     }
 
     infile.close();
-    
+
     return formula;
 }
 
@@ -108,7 +108,7 @@ std::set<int> unitPropagation(CNFFormula& formula) {
         if (unit_literal == 0) {
             break;
         }
-        
+
         assigned_literals.insert(unit_literal);
         changed = true;
 
@@ -137,10 +137,10 @@ std::set<int> unitPropagation(CNFFormula& formula) {
                 formula.numClauses = 1;
                 return assigned_literals;
             }
-            
+
             new_clauses.push_back(new_clause);
         }
-        
+
         formula.clauses = new_clauses;
         formula.numClauses = formula.clauses.size();
 

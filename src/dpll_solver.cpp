@@ -4,6 +4,7 @@
 
 bool DPLL(CNFFormula& formula, std::set<int>& assigned, std::set<int>& solution) {
     std::set<int> newly_assigned_from_prop = unitPropagation(formula);
+
     for (int lit : newly_assigned_from_prop) assigned.insert(lit);
 
     for (const auto& clause : formula.clauses) {
@@ -30,7 +31,6 @@ bool DPLL(CNFFormula& formula, std::set<int>& assigned, std::set<int>& solution)
         return false;
     }
 
-    // --- TRUE dalı ---
     int decision_literal_true = chosen_var;
     formula.clauses.push_back(Clause{std::vector<int>{decision_literal_true}});
     assigned.insert(decision_literal_true);
@@ -44,11 +44,8 @@ bool DPLL(CNFFormula& formula, std::set<int>& assigned, std::set<int>& solution)
         return true;
     }
 
-    // TRUE dalı başarısız oldu. newly_assigned'ları geri al.
     for (int lit : newly_assigned_from_prop) assigned.erase(lit);
 
-
-    // --- FALSE dalı ---
     int decision_literal_false = -chosen_var;
     formula.clauses.push_back(Clause{std::vector<int>{decision_literal_false}});
     assigned.insert(decision_literal_false);
@@ -62,7 +59,6 @@ bool DPLL(CNFFormula& formula, std::set<int>& assigned, std::set<int>& solution)
         return true;
     }
 
-    // FALSE dalı başarısız oldu. newly_assigned'ları geri al.
     for (int lit : newly_assigned_from_prop) assigned.erase(lit);
 
     return false;
