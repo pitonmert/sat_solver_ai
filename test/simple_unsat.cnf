@@ -1,0 +1,4 @@
+c simple_unsat.cnf: Çözümü olmayan basit bir formül
+p cnf 1 2
+1 0
+-1 0

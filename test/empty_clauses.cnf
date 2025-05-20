@@ -1,0 +1,2 @@
+c empty_clauses.cnf: Hiç klauzu olmayan önemsizce çözülebilir bir formül
+p cnf 0 0
