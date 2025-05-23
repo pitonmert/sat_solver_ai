@@ -1,7 +1,7 @@
 #include "cnf_parser.h"
 #include <iostream>
 #include <fstream>
-#include <sstream>
+#include <sstream> // std::istringstream için gerekli
 #include <vector>
 #include <string>
 #include <set>
@@ -9,31 +9,42 @@
 #include <cctype>
 #include <stdexcept>
 
-
-CNFFormula parseCNF(const std::string& filename) {
-    std::ifstream infile(filename);
-    if (!infile) {
-        throw std::runtime_error("Dosya açılamadı: " + filename);
-    }
-
+// Bir input stream'den (örneğin dosya veya terminal) CNF formülü okuyan fonksiyon
+CNFFormula parseCNFFromStream(std::istream& input_stream) {
     std::string line;
     CNFFormula formula;
     formula.numVars = 0;
     formula.numClauses = 0;
 
     int actualClauseCount = 0;
+    bool p_line_found = false; // p satırının bulunup bulunmadığını takip etmek için
 
-    while (std::getline(infile, line)) {
+    while (std::getline(input_stream, line)) {
+        // Boş satırları veya yorum satırlarını (c ile başlayan) atla
         if (line.empty() || line[0] == 'c') {
             continue;
         }
+        // p satırını işle (problem tanımı)
         if (line[0] == 'p') {
+            if (p_line_found) { // Birden fazla p satırı varsa hata ver
+                throw std::runtime_error("Birden fazla 'p' satırı bulundu. CNF formatı geçersiz.");
+            }
             std::istringstream iss(line);
-            std::string dummy1, dummy2;
+            std::string dummy1, dummy2; // "p" ve "cnf" kelimeleri için
             iss >> dummy1 >> dummy2 >> formula.numVars >> formula.numClauses;
-            continue;
+            if (iss.fail() || dummy1 != "p" || dummy2 != "cnf" || formula.numVars <= 0 || formula.numClauses < 0) {
+                throw std::runtime_error("Geçersiz 'p' satırı formatı. Beklenen: p cnf <değişken_sayısı> <klauz_sayısı>");
+            }
+            p_line_found = true;
+            continue; // Bir sonraki satıra geç
         }
 
+        // Eğer p satırı henüz bulunamadıysa ve klauz satırı geliyorsa hata ver
+        if (!p_line_found) {
+            throw std::runtime_error("Klauzlar 'p' satırından önce geldi. CNF formatı geçersiz.");
+        }
+
+        // Klauz satırlarını işle
         std::istringstream iss(line);
         int literal;
         Clause clause;
@@ -41,7 +52,9 @@ CNFFormula parseCNF(const std::string& filename) {
         while (iss >> token) {
             bool valid = true;
             size_t start = 0;
+            // Negatif sayılar için '-' veya '+' işaretini atla
             if (token[0] == '-' || token[0] == '+') start = 1;
+            // Token'ın sadece rakamlardan oluştuğunu kontrol et
             for (size_t i = start; i < token.size(); ++i) {
                 if (!std::isdigit(token[i])) {
                     valid = false;
@@ -49,33 +62,51 @@ CNFFormula parseCNF(const std::string& filename) {
                 }
             }
             if (!valid) {
-                throw std::runtime_error("Geçersiz karakter klauz satırında: " + token);
+                throw std::runtime_error("Geçersiz karakter klauz satırında: " + token + " (Sadece sayılar ve 0 beklenir)");
             }
 
             literal = std::stoi(token);
 
-            if (literal == 0) {
+            if (literal == 0) { // Klauzun sonu 0 ile belirtilir
                 break;
+            }
+            // Literal değişken sayısından büyükse hata ver
+            if (std::abs(literal) > formula.numVars) {
+                throw std::runtime_error("Klauzda tanımlanmamış değişken kullanıldı: " + std::to_string(literal) + ". Maksimum değişken: " + std::to_string(formula.numVars));
             }
             clause.literals.push_back(literal);
         }
 
-        if (!clause.literals.empty()) {
+        // Eğer klauz boş değilse (yani 0'dan önce literal varsa), formüle ekle
+        if (!clause.literals.empty() || (literal == 0 && line.find_first_not_of(" \t\r\n") != std::string::npos)) {
             formula.clauses.push_back(clause);
             actualClauseCount++;
         }
     }
 
-    if (actualClauseCount != formula.numClauses) {
+    // Okunan klauz sayısı p satırındaki klauz sayısıyla eşleşmeli
+    if (p_line_found && actualClauseCount != formula.numClauses) {
         throw std::runtime_error("Dosyadaki klauz sayısı (" + std::to_string(actualClauseCount) +
                                  ") p satırındaki sayı ile eşleşmiyor (" + std::to_string(formula.numClauses) + ").");
     }
-
-    infile.close();
+    // Eğer p satırı hiç bulunamadıysa hata ver
+    if (!p_line_found) {
+        throw std::runtime_error("CNF formatında 'p' satırı bulunamadı.");
+    }
 
     return formula;
 }
 
+// Dosyadan CNF formülü okuyan mevcut fonksiyon, artık parseCNFFromStream'i çağırıyor
+CNFFormula parseCNF(const std::string& filename) {
+    std::ifstream infile(filename);
+    if (!infile) {
+        throw std::runtime_error("Dosya açılamadı: " + filename);
+    }
+    return parseCNFFromStream(infile); // Akıştan okuma fonksiyonunu çağır
+}
+
+// CNF formülünü ekrana yazdıran yardımcı fonksiyon
 void printCNF(const CNFFormula& formula) {
     std::cout << "Değişken sayısı: " << formula.numVars << std::endl;
     std::cout << "Klauz sayısı: " << formula.clauses.size() << std::endl;

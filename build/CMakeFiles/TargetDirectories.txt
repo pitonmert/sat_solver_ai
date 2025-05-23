@@ -1,0 +1,4 @@
+/Users/pitonmert/Documents/sat_solver_ai/build/CMakeFiles/sat_solver_ai.dir
+/Users/pitonmert/Documents/sat_solver_ai/build/CMakeFiles/test.dir
+/Users/pitonmert/Documents/sat_solver_ai/build/CMakeFiles/edit_cache.dir
+/Users/pitonmert/Documents/sat_solver_ai/build/CMakeFiles/rebuild_cache.dir
