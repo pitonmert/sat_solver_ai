@@ -1,4 +1,0 @@
-D:/PitonMert/GitHub/sat_solver_ai/build/CMakeFiles/sat_solver_ai.dir
-D:/PitonMert/GitHub/sat_solver_ai/build/CMakeFiles/RUN_TESTS.dir
-D:/PitonMert/GitHub/sat_solver_ai/build/CMakeFiles/ALL_BUILD.dir
-D:/PitonMert/GitHub/sat_solver_ai/build/CMakeFiles/ZERO_CHECK.dir
