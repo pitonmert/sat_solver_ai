@@ -8,17 +8,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(SOURCE_DIR src)
 set(INCLUDE_DIR include)
 
+# Yeni auth.cpp dosyasını ekledik
 file(GLOB_RECURSE SOURCES "${SOURCE_DIR}/*.cpp")
 
 add_executable(sat_solver_ai ${SOURCES})
 
 target_include_directories(sat_solver_ai PUBLIC ${INCLUDE_DIR})
 
-# CTest için testleri etkinleştir
 enable_testing()
 
 set(TEST_DIR test)
-set(SAT_SOLVER_EXECUTABLE ${CMAKE_CURRENT_BINARY_DIR}/sat_solver_ai) # Çalıştırılabilir dosya build klasöründe
+set(SAT_SOLVER_EXECUTABLE ${CMAKE_CURRENT_BINARY_DIR}/sat_solver_ai)
 
 file(GLOB_RECURSE TEST_FILES "${TEST_DIR}/*.cnf")
 

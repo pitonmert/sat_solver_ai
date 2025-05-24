@@ -5,20 +5,22 @@
 #include <stdexcept>
 #include <istream>
 
-struct Clause {
+struct Clause
+{
     std::vector<int> literals;
 };
 
-struct CNFFormula {
+struct CNFFormula
+{
     int numVars;
     int numClauses;
     std::vector<Clause> clauses;
 };
 
-CNFFormula parseCNF(const std::string& filename);
+CNFFormula parseCNF(const std::string &filename);
 
-CNFFormula parseCNFFromStream(std::istream& input_stream);
+CNFFormula parseCNFFromStream(std::istream &input_stream);
 
-std::set<int> unitPropagation(CNFFormula& formula);
+std::set<int> unitPropagation(CNFFormula &formula);
 
-void printCNF(const CNFFormula& formula);
+void printCNF(const CNFFormula &formula);

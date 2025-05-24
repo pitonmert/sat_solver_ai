@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\PitonMert\GitHub\sat_solver_ai\build\CMakeFiles\8d773a1a3a66d9e07a031657dd5a4973\RUN_TESTS_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{2681BAE1-D8B2-3B7A-AC58-7EF5E7820CB6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -3,6 +3,6 @@
 #include <set>
 #include <vector>
 
-bool DPLL(CNFFormula& formula, std::set<int>& assigned, std::set<int>& solution);
+bool DPLL(CNFFormula &formula, std::set<int> &assigned, std::set<int> &solution);
 
-std::set<int> unitPropagation(CNFFormula& formula);
+std::set<int> unitPropagation(CNFFormula &formula);

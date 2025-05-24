@@ -1,4 +1,4 @@
-/Users/pitonmert/Documents/sat_solver_ai/build/CMakeFiles/sat_solver_ai.dir
-/Users/pitonmert/Documents/sat_solver_ai/build/CMakeFiles/test.dir
-/Users/pitonmert/Documents/sat_solver_ai/build/CMakeFiles/edit_cache.dir
-/Users/pitonmert/Documents/sat_solver_ai/build/CMakeFiles/rebuild_cache.dir
+D:/PitonMert/GitHub/sat_solver_ai/build/CMakeFiles/sat_solver_ai.dir
+D:/PitonMert/GitHub/sat_solver_ai/build/CMakeFiles/RUN_TESTS.dir
+D:/PitonMert/GitHub/sat_solver_ai/build/CMakeFiles/ALL_BUILD.dir
+D:/PitonMert/GitHub/sat_solver_ai/build/CMakeFiles/ZERO_CHECK.dir
