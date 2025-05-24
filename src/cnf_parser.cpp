@@ -9,6 +9,7 @@
 #include <cctype>
 #include <stdexcept>
 
+// Terminalden veya dosyadan CNF formatını okuyan fonksiyon
 CNFFormula parseCNFFromStream(std::istream &input_stream)
 {
     std::string line;
@@ -21,10 +22,12 @@ CNFFormula parseCNFFromStream(std::istream &input_stream)
 
     while (std::getline(input_stream, line))
     {
+        // Yorum satırlarını atla
         if (line.empty() || line[0] == 'c')
         {
             continue;
         }
+        // 'p cnf' satırını işle
         if (line[0] == 'p')
         {
             if (p_line_found)
@@ -47,12 +50,14 @@ CNFFormula parseCNFFromStream(std::istream &input_stream)
             throw std::runtime_error("Klauzlar 'p' satirindan once geldi. CNF formati gecersiz.");
         }
 
+        // Klauz satırını işle
         std::istringstream iss(line);
         int literal;
         Clause clause;
         std::string token;
         while (iss >> token)
         {
+            // Token'ın geçerli bir sayı olup olmadığını kontrol et
             bool valid = true;
             size_t start = 0;
             if (token[0] == '-' || token[0] == '+')
@@ -83,6 +88,7 @@ CNFFormula parseCNFFromStream(std::istream &input_stream)
             clause.literals.push_back(literal);
         }
 
+        // Klauz ekle
         if (!clause.literals.empty() || (literal == 0 && line.find_first_not_of(" \t\r\n") != std::string::npos))
         {
             formula.clauses.push_back(clause);
@@ -90,6 +96,7 @@ CNFFormula parseCNFFromStream(std::istream &input_stream)
         }
     }
 
+    // Klauz sayısı kontrolü
     if (p_line_found && actualClauseCount != formula.numClauses)
     {
         throw std::runtime_error("Dosyadaki klauz sayisi (" + std::to_string(actualClauseCount) +
@@ -103,6 +110,7 @@ CNFFormula parseCNFFromStream(std::istream &input_stream)
     return formula;
 }
 
+// Dosyadan CNF okuyan fonksiyon
 CNFFormula parseCNF(const std::string &filename)
 {
     std::ifstream infile(filename);
@@ -113,6 +121,7 @@ CNFFormula parseCNF(const std::string &filename)
     return parseCNFFromStream(infile);
 }
 
+// CNF formülünü ekrana yazdıran yardımcı fonksiyon
 void printCNF(const CNFFormula &formula)
 {
     std::cout << "Degisken sayisi: " << formula.numVars << std::endl;

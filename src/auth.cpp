@@ -2,6 +2,7 @@
 #include <iostream>
 #include <limits>
 
+// Kullanıcıdan yeni hesap oluşturma fonksiyonu
 User createNewAccount()
 {
     User newUser;
@@ -15,6 +16,7 @@ User createNewAccount()
     return newUser;
 }
 
+// Kullanıcı doğrulama fonksiyonu
 bool authenticateUser(const User &registeredUser, UserRole &authenticatedRole, int &attempts)
 {
     std::string enteredUsername;
@@ -26,6 +28,7 @@ bool authenticateUser(const User &registeredUser, UserRole &authenticatedRole, i
         std::cin >> enteredUsername;
         std::cout << "Sifre: ";
         std::cin >> enteredPassword;
+        // Kullanıcı adı ve şifre kontrolü
         if (enteredUsername == registeredUser.username && enteredPassword == registeredUser.password)
         {
             std::cout << "Giris basarili!" << std::endl;

@@ -9,11 +9,13 @@
 
 int main(int argc, char *argv[])
 {
+    // Kullanıcıdan yeni hesap oluşturuluyor
     User registeredUser = createNewAccount();
     UserRole authenticatedRole;
     int loginAttempts = 3;
     bool loginSuccess = false;
 
+    // Kullanıcı giriş işlemleri ve admin ile ek hak tanıma
     while (!loginSuccess)
     {
         if (!authenticateUser(registeredUser, authenticatedRole, loginAttempts))
@@ -50,6 +52,7 @@ int main(int argc, char *argv[])
         }
     }
 
+    // Kullanıcı rolüne göre bilgi mesajı
     if (authenticatedRole == UserRole::Admin)
     {
         std::cout << "Admin olarak giris yaptiniz." << std::endl;
@@ -63,6 +66,7 @@ int main(int argc, char *argv[])
     std::string input_choice;
     bool valid_choice = false;
 
+    // Dosya argümanı ile CNF okuma veya terminalden alma
     if (argc > 1)
     {
         std::string filename = argv[1];
@@ -121,6 +125,7 @@ int main(int argc, char *argv[])
     std::set<int> solution;
     std::set<int> initial_assigned;
 
+    // DPLL algoritması ile çözüm aranıyor
     bool result = DPLL(f, initial_assigned, solution);
 
     if (result)
