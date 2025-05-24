@@ -33,3 +33,6 @@
 
 # Build directory (CMake outputs)
 build/
+
+# VS Code settings directory
+.vscode/
