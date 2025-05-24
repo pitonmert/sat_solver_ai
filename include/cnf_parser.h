@@ -18,9 +18,6 @@ struct CNFFormula
 };
 
 CNFFormula parseCNF(const std::string &filename);
-
 CNFFormula parseCNFFromStream(std::istream &input_stream);
-
 std::set<int> unitPropagation(CNFFormula &formula);
-
 void printCNF(const CNFFormula &formula);

@@ -1,4 +1,3 @@
-// src/auth.cpp
 #include "../include/auth.h"
 #include <iostream>
 #include <limits>
@@ -9,31 +8,24 @@ User createNewAccount()
     std::cout << "Yeni hesap olusturma:" << std::endl;
     std::cout << "Kullanici adi girin: ";
     std::cin >> newUser.username;
-
     std::cout << "Sifre girin: ";
     std::cin >> newUser.password;
-
     newUser.role = UserRole::User;
-
     std::cout << "Hesap basariyla olusturuldu!" << std::endl;
     return newUser;
 }
 
-// authenticateUser fonksiyonu güncellendi: remainingAttempts dışarıdan alınacak
 bool authenticateUser(const User &registeredUser, UserRole &authenticatedRole, int &attempts)
 {
     std::string enteredUsername;
     std::string enteredPassword;
-
     while (attempts > 0)
     {
         std::cout << "\nGiris yapma:" << std::endl;
         std::cout << "Kullanici adi: ";
         std::cin >> enteredUsername;
-
         std::cout << "Sifre: ";
         std::cin >> enteredPassword;
-
         if (enteredUsername == registeredUser.username && enteredPassword == registeredUser.password)
         {
             std::cout << "Giris basarili!" << std::endl;
@@ -47,7 +39,6 @@ bool authenticateUser(const User &registeredUser, UserRole &authenticatedRole, i
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
-
     authenticatedRole = UserRole::User;
     return false;
 }

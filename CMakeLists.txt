@@ -8,7 +8,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(SOURCE_DIR src)
 set(INCLUDE_DIR include)
 
-# Yeni auth.cpp dosyasını ekledik
 file(GLOB_RECURSE SOURCES "${SOURCE_DIR}/*.cpp")
 
 add_executable(sat_solver_ai ${SOURCES})

@@ -1,6 +1,4 @@
-// include/auth.h
 #pragma once
-
 #include <string>
 
 enum class UserRole
@@ -17,6 +15,4 @@ struct User
 };
 
 User createNewAccount();
-
-// authenticateUser fonksiyonunun prototipi güncellendi: attempts parametresi eklendi
 bool authenticateUser(const User &registeredUser, UserRole &authenticatedRole, int &attempts);

@@ -1,4 +1,3 @@
-// src/main.cpp
 #include "dpll_solver.h"
 #include "visualizer.h"
 #include "cnf_parser.h"
@@ -12,60 +11,45 @@ int main(int argc, char *argv[])
 {
     User registeredUser = createNewAccount();
     UserRole authenticatedRole;
-    int loginAttempts = 3; // İlk giriş deneme hakkı
-
+    int loginAttempts = 3;
     bool loginSuccess = false;
 
     while (!loginSuccess)
     {
         if (!authenticateUser(registeredUser, authenticatedRole, loginAttempts))
         {
-            // Kimlik doğrulama başarısız ve deneme hakkı bitti
             if (loginAttempts == 0)
             {
                 std::cout << "Tum deneme haklariniz bitti. Admin girisi deneniyor..." << std::endl;
-
-                // Varsayılan Admin hesabı
                 User adminUser;
                 adminUser.username = "admin";
                 adminUser.password = "123";
                 adminUser.role = UserRole::Admin;
-
                 UserRole adminAuthenticatedRole;
-                int adminLoginAttempts = 1; // Admin için tek deneme hakkı
+                int adminLoginAttempts = 1;
                 if (authenticateUser(adminUser, adminAuthenticatedRole, adminLoginAttempts))
                 {
                     std::cout << "Admin olarak giris yaptiniz." << std::endl;
-                    // Admin'den yeni deneme hakkı al
                     int extraAttempts;
                     std::cout << "Kullaniciya kac ek deneme hakki vermek istersiniz? ";
                     std::cin >> extraAttempts;
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Tamponu temizle
-
-                    loginAttempts = extraAttempts; // Kullanıcıya yeni deneme haklarını ver
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    loginAttempts = extraAttempts;
                     std::cout << "Kullaniciya " << extraAttempts << " ek deneme hakki verildi." << std::endl;
-                    // Tekrar kullanıcı giriş döngüsüne dönmek için loginSuccess false kalır
                 }
                 else
                 {
                     std::cerr << "Admin girisi basarisiz. Program sonlandiriliyor." << std::endl;
-                    return 1; // Admin girişi de başarısız olursa programı kapat
+                    return 1;
                 }
-            }
-            else
-            {
-                // Deneme hakkı var ama giriş başarısız, döngü devam edecek
-                // Bu durum aslında authenticateUser içindeki döngü tarafından yönetiliyor.
-                // Buraya kod ulaşmaz, eğer authenticateUser'dan false dönüyorsa deneme hakkı bitmiş demektir.
             }
         }
         else
         {
-            loginSuccess = true; // Giriş başarılı oldu
+            loginSuccess = true;
         }
     }
 
-    // Kimlik doğrulama başarılı ise, kullanıcının rolünü yazdır (isteğe bağlı)
     if (authenticatedRole == UserRole::Admin)
     {
         std::cout << "Admin olarak giris yaptiniz." << std::endl;
@@ -99,7 +83,6 @@ int main(int argc, char *argv[])
         {
             std::cout << "Giris yontemini secin (dosya/terminal): ";
             std::cin >> input_choice;
-
             if (input_choice == "dosya" || input_choice == "terminal")
             {
                 valid_choice = true;
